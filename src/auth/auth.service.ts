@@ -5,23 +5,32 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
 import * as bcrypt from 'bcryptjs';
-
+import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class AuthService {
 
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
-  async validateUser(username: string, password: string): Promise<User | null> {
+  async validateUser(username: string, pass: string): Promise<any | null> {
     const user = await this.userRepository.findOneBy({ username });
     if (!user) {
       return null;
     }
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const { password, ...result } = user;
+    const passwordMatch = await bcrypt.compare(pass, password);
     if (!passwordMatch) {
       return null;
     }
-    return user;
+    return result;
+  }
+
+  async login(user: any) {
+    const payload = { username: user.username, sub: user.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }

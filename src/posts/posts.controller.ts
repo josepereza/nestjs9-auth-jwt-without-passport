@@ -6,20 +6,21 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import { UsersService } from 'src/users/users.service';
 @Controller('posts')
 export class PostsController {
   constructor(private readonly userService: UsersService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   async createPost(
     @Body() body: { title: string; content: string },
     @Request() req,
   ): Promise<any> {
+    console.log('post.controller', req.user)
     const post = await this.userService.createPost(
-      req.user.sub,
+      req.user.id,
       body.title,
       body.content,
     );
@@ -27,7 +28,7 @@ export class PostsController {
   }
 
   @Get()
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   async getAllPosts(): Promise<any[]> {
     const posts = await this.userService.getAllPosts();
     return posts;
