@@ -14,7 +14,7 @@ import { AuthModule } from './auth/auth.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '03266Jpa',
+      password: '123456',
       database: 'test',
       entities: [User, Post],
       synchronize: true,
