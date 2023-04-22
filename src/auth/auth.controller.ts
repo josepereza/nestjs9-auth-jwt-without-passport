@@ -38,7 +38,7 @@ export class AuthController {
     }
 
     // aquí generamos un token de acceso utilizando algún paquete de JWT
-    const payload = { username: user.username, sub: user.id };
+    const payload = { username: user.username, id: user.id };
     const accessToken = await this.jwtService.signAsync(payload);
     return { accessToken };
   }
