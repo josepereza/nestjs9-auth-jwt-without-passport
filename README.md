@@ -23,7 +23,7 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
-
+### Tenemos 2 ramas: Una sin usar passport y otra usando passport-jwt
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
