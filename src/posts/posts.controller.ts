@@ -19,7 +19,7 @@ export class PostsController {
     @Request() req,
   ): Promise<any> {
     const post = await this.userService.createPost(
-      req.user.id,
+      req.user.sub,
       body.title,
       body.content,
     );
